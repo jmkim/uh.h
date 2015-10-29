@@ -1,25 +1,20 @@
 /*
-  uh_trim
+  uh_trim.c
   Trim the leading/trailing characters
 
   Author: Jongmin Kim <jmkim@pukyong.ac.kr>
   Written on October 29, 2015
-
-  include: <stdio.h>, <stdlib.h>, <string.h>
 */
 
-#ifndef _UH_TRIM_H
-#define _UH_TRIM_H  1
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "uh_trim.h"
 
 #define __TRIM__ALL     1
 #define __TRIM__BOTH    2
 #define __TRIM__LEAD    3
 #define __TRIM__TAIL    4
-
-char *uh_trim_all(char *input_string, char *remove_char);
-char *uh_trim_both(char *input_string, char *remove_char);
-char *uh_trim_leading(char *input_string, char *remove_char);
-char *uh_trim_trailing(char *input_string, char *remove_char);
 
 char *uh_trim(char *input_string, char *remove_char, int type)
 {
@@ -86,16 +81,18 @@ char *uh_trim_all(char *input_string, char *remove_char)
 {
   return uh_trim(input_string, remove_char, __TRIM__ALL);
 }
+
 char *uh_trim_both(char *input_string, char *remove_char)
 {
   return uh_trim(input_string, remove_char, __TRIM__BOTH);
 }
+
 char *uh_trim_leading(char *input_string, char *remove_char)
 {
   return uh_trim(input_string, remove_char, __TRIM__LEAD);
 }
+
 char *uh_trim_trailing(char *input_string, char *remove_char)
 {
   return uh_trim(input_string, remove_char, __TRIM__TAIL);
 }
-#endif /* _UH_TRIM_H */

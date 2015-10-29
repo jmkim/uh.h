@@ -1,30 +1,30 @@
 /*
-  uh_fgets
+  uh_fgets.c
   Read string as line by line from stream
 
   Author: Jongmin Kim <jmkim@pukyong.ac.kr>
   Written on October 29, 2015
-
-  include: <stdio.h>, <stdlib.h>, <string.h>
 */
 
-#ifndef _UH_FGETS_H
-#define _UH_FGETS_H  1
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "uh_fgets.h"
 
-#ifndef UH_FGETS_INPUT_LEN
-#define UH_FGETS_INPUT_LEN  200 /* default value is 200 */
+#ifndef UH_FGETS_MAX_INPUT_LEN
+#define UH_FGETS_MAX_INPUT_LEN  200 /* default value is 200 */
 #endif
 
 char *uh_fgets(FILE *stream, char *ignore_char)
 {
   /* read string line by line from stream */
   char fp_char;
-  char fp_array[UH_FGETS_INPUT_LEN + 1];
+  char fp_array[UH_FGETS_MAX_INPUT_LEN + 1];
 
   int length = 0;
   while((fp_char = fgetc(stream)) != '\n' && fp_char != EOF)
   {
-    if(length >= UH_FGETS_INPUT_LEN) break;
+    if(length >= UH_FGETS_MAX_INPUT_LEN) break;
 
     if(ignore_char != NULL)
     {
@@ -46,4 +46,3 @@ char *uh_fgets(FILE *stream, char *ignore_char)
 
   return fp;
 }
-#endif /* _UH_FGETS_H */
