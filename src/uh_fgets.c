@@ -51,6 +51,6 @@ int uh_fgets_ignore(FILE *stream, char *save_ptr, int size_of_ptr, char *ignore_
   }
   fp_array[length] = '\0';
 
-  strcpy(ptr_to_save, fp_array);
+  strcpy(save_ptr, fp_array);
   return strlen(fp_array);
 }
