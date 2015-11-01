@@ -4,6 +4,14 @@
 
   Author: Jongmin Kim <jmkim@pukyong.ac.kr>
   Written on October 29, 2015
+
+  Revision History
+  1. November 2, 2015
+    * Now `uh_fgets()' and `uh_fgets_ignore()' returns size of input.
+    * Memory allocation removed. Allocated pointer is required.
+    * `uh_fgets()' work as a normal input method (e.g. `scanf()'), and
+      old one moved to `uh_fgets_ignore()'.
+    * Default buffer size to 20000.
 */
 
 #include <stdio.h>
@@ -11,20 +19,22 @@
 #include <string.h>
 #include "uh_fgets.h"
 
-#ifndef UH_FGETS_MAX_INPUT_LEN
-#define UH_FGETS_MAX_INPUT_LEN  200 /* default value is 200 */
-#endif
+int uh_fgets(FILE *stream, char *save_ptr, int size_of_ptr)
+{
+  return uh_fgets_ignore(stream, save_ptr, size_of_ptr, NULL);
+}
 
-char *uh_fgets(FILE *stream, char *ignore_char)
+int uh_fgets_ignore(FILE *stream, char *save_ptr, int size_of_ptr, char *ignore_char)
 {
   /* read string line by line from stream */
   char fp_char;
-  char fp_array[UH_FGETS_MAX_INPUT_LEN + 1];
+  char fp_array[UH_FGETS_BUFFER_SIZE + 1];
+  if(size_of_ptr > UH_FGETS_BUFFER_SIZE) { size_of_ptr = UH_FGETS_BUFFER_SIZE; }
 
   int length = 0;
   while((fp_char = fgetc(stream)) != '\n' && fp_char != EOF)
   {
-    if(length >= UH_FGETS_MAX_INPUT_LEN) break;
+    if(length >= size_of_ptr) { break; }
 
     if(ignore_char != NULL)
     {
@@ -32,17 +42,15 @@ char *uh_fgets(FILE *stream, char *ignore_char)
       int foo, ignore = 0;
       for(foo = 0; foo < strlen(ignore_char); foo++)
       {
-        if(fp_char == ignore_char[foo]) ignore++;
+        if(fp_char == ignore_char[foo]) { ignore++; }
       }
-      if(ignore) continue;
+      if(ignore) { continue; }
     }
 
     fp_array[length++] = fp_char;
   }
   fp_array[length] = '\0';
 
-  char *fp = (char *)malloc(strlen(fp_array) + 1);
-  strcpy(fp, fp_array);
-
-  return fp;
+  strcpy(ptr_to_save, fp_array);
+  return strlen(fp_array);
 }

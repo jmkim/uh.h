@@ -4,6 +4,10 @@
 
   Author: Jongmin Kim <jmkim@pukyong.ac.kr>
   Written on October 29, 2015
+
+  Revision History
+  1. November 2, 2015
+    * Minor bug fixes.
 */
 
 #include <stdio.h>
@@ -11,10 +15,10 @@
 #include <string.h>
 #include "uh_trim.h"
 
-#define __TRIM__ALL     1
-#define __TRIM__BOTH    2
-#define __TRIM__LEAD    3
-#define __TRIM__TAIL    4
+#define __UH__TRIM__ALL     1
+#define __UH__TRIM__BOTH    2
+#define __UH__TRIM__LEAD    3
+#define __UH__TRIM__TAIL    4
 
 char *uh_trim(char *input_string, char *remove_char, int type)
 {
@@ -26,7 +30,7 @@ char *uh_trim(char *input_string, char *remove_char, int type)
 
   switch(type)
   {
-  case __TRIM__ALL:
+  case __UH__TRIM__ALL:
     for(foo = 0; foo < strlen(fp_input); foo++)
     {
       int bar, remove = 0;
@@ -38,8 +42,8 @@ char *uh_trim(char *input_string, char *remove_char, int type)
     }
     fp_temp[fp_cursor] = '\0';
     break;
-  case __TRIM__BOTH:
-  case __TRIM__LEAD:
+  case __UH__TRIM__BOTH:
+  case __UH__TRIM__LEAD:
     for(foo = 0; foo < strlen(fp_input); foo++)
     {
       int bar, remove = 0;
@@ -50,9 +54,9 @@ char *uh_trim(char *input_string, char *remove_char, int type)
     while(foo < strlen(fp_input))
       fp_temp[fp_cursor++] = fp_input[foo++];
     fp_temp[fp_cursor] = '\0';
-    if(type == __TRIM__LEAD) break;
-  case __TRIM__TAIL:
-    if(type == __TRIM__BOTH) strcpy(fp_input, fp_temp);
+    if(type == __UH__TRIM__LEAD) break;
+  case __UH__TRIM__TAIL:
+    if(type == __UH__TRIM__BOTH) strcpy(fp_input, fp_temp);
     strcpy(fp_temp, fp_input);
     for(foo = strlen(fp_input) - 1; foo >= 0; foo--)
     {
@@ -79,20 +83,20 @@ char *uh_trim(char *input_string, char *remove_char, int type)
 
 char *uh_trim_all(char *input_string, char *remove_char)
 {
-  return uh_trim(input_string, remove_char, __TRIM__ALL);
+  return uh_trim(input_string, remove_char, __UH__TRIM__ALL);
 }
 
 char *uh_trim_both(char *input_string, char *remove_char)
 {
-  return uh_trim(input_string, remove_char, __TRIM__BOTH);
+  return uh_trim(input_string, remove_char, __UH__TRIM__BOTH);
 }
 
 char *uh_trim_leading(char *input_string, char *remove_char)
 {
-  return uh_trim(input_string, remove_char, __TRIM__LEAD);
+  return uh_trim(input_string, remove_char, __UH__TRIM__LEAD);
 }
 
 char *uh_trim_trailing(char *input_string, char *remove_char)
 {
-  return uh_trim(input_string, remove_char, __TRIM__TAIL);
+  return uh_trim(input_string, remove_char, __UH__TRIM__TAIL);
 }
