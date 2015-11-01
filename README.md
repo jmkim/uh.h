@@ -36,7 +36,8 @@ gcc -L ./lib -luh your_source_file.c
 int main(void)
 {
   printf("Enter the string: ");
-  char *str = uh_fgets(stdin, NULL);
+  char str[100];
+  uh_fgets(stdin, str, 100);
   printf(
     "Trim the string..\n"
     "     all        : \"%s\"\n"
